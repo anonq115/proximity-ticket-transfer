@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Notification-Based Entry System</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f8f8f8; /* Initial background color */
+    transition: background-color 0.5s ease; /* Smooth transition for background color change */
+  }
+  .container {
+    text-align: center;
+    display: none; /* Hide the container initially */
+  }
+  #confirmEntry {
+    font-size: 24px; /* Set the font size to make the button bigger */
+    padding: 10px 20px; /* Add padding to increase the button size */
+    border: none;
+    display: inline-block;
+    outline: none;
+    cursor: pointer;
+    font-weight: 500;
+    border-radius: 3px;
+    padding: 0 15px;
+    border-radius: 4px;
+    color: #6200ee;
+    background: transparent;
+    line-height: 1.15;
+    font-size: 14px;
+    height: 36px;
+    word-spacing: 0px;
+    letter-spacing: .0892857143em;
+    text-decoration: none;
+    text-transform: uppercase;
+    min-width: 64px;
+    border: 1px solid #6200ee;
+    text-align: center;
+    transition: background 280ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  #confirmEntry:hover {
+    background: #f4f4f4;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1 id="message">Your turn to enter</h1>
+  <button id="confirmEntry" onclick="confirmEntry()">Confirm</button>
+</div>
+
+<script>
+  // Function to change the message
+  function changeMessage(message) {
+    document.getElementById("message").textContent = message;
+  }
+
+  // Function to show the container after a delay
+  setTimeout(() => {
+    document.querySelector(".container").style.display = "block";
+  }, 1000); // Delay of 1 second
+
+  // Simulate proximity detection
+  function detectProximity() {
+    return true; // For demonstration, always return true
+  }
+
+  // Simulate sending a notification
+  function sendNotification() {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve("Ticket sent. Please wait for entry confirmation.");
+      }, 1700); // Simulate a delay for sending the notification
+    });
+  }
+
+  // Function to handle the confirm button click
+  async function confirmEntry() {
+    if (detectProximity()) {
+      changeMessage("Ticket sent. Please wait for entry confirmation.");
+      document.getElementById("confirmEntry").style.display = "none"; // Hide the button
+      const message = await sendNotification();
+      changeMessage("You're good to go!");
+      document.body.style.backgroundColor = "green"; // Change background color to green
+    } else {
+      alert("You are not in proximity to confirm entry.");
+    }
+  }
+</script>
+</body>
+</html>
